@@ -11,7 +11,6 @@ def get_X_y(list, converter):
     np.random.shuffle(list)
     large_list = []
     for m in list:
-        large_list = large_list + []
         large_list = large_list + [[  # converter.convert(m[0]),
             converter.convert(m[1]),
             converter.convert(m[2]),
