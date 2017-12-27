@@ -58,19 +58,31 @@ def read_from(path, word_count):
     for line in words:
         i += 1
         strings.append(line)
-    if word_count < 0 or word_count > len(strings) -1:
+    if word_count == 0 or word_count > len(strings) -1:
         word_count = len(strings) -1
-    words_ending = strings[0]
 
-    ends_mass= ends_parser(words_ending)
+    if word_count < 0:   # читаем с конца файла строки, то есть забираем |word_count| последних строк
+        words_ending = strings[0]
+        ends_mass = ends_parser(words_ending)
+        fin_words = []
+        # print("words_ending", ends_mass)
+        for word in strings[word_count:]:
+            for end in ends_mass:
+                fin_words.append(word[:-1] + (end if end != '#' else ""))
+        # print("Final words:", fin_words)
+        return fin_words
+    else:
+        words_ending = strings[0]
 
-    fin_words = []
-    # print("words_ending", ends_mass)
-    for word in strings[1:word_count+1]:
-         for end in ends_mass:
-             fin_words.append(word[:-1] + (end if end != '#' else ""))
-    print("Final words:", fin_words)
-    return fin_words
+        ends_mass= ends_parser(words_ending)
+
+        fin_words = []
+        # print("words_ending", ends_mass)
+        for word in strings[1:word_count+1]:
+             for end in ends_mass:
+                 fin_words.append(word[:-1] + (end if end != '#' else ""))
+        # print("Final words:", fin_words)
+        return fin_words
 
 
 def read_files_from(path, word_count):
@@ -78,7 +90,7 @@ def read_files_from(path, word_count):
     # print(listdir("./resource/ЖЕН/"))
     i=0
     for file in listdir(path):
-        print(i)
+        # print(i)
         all_words = all_words + read_from(path + file, word_count)
         i+=1
 
