@@ -2,8 +2,8 @@ import numpy as np
 from read_groups import make_list_gender, make_list_parts_of_speech
 from sklearn import metrics
 # from sklearn.naive_bayes import BernoulliNB
-# from sklearn.tree import DecisionTreeClassifier
-from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+
 
 from sklearn.externals import joblib # для сохранения модели
 
@@ -46,7 +46,7 @@ def check_data(test_X, test_y, data):
 
 
 
-def start_SVC(train_len, test_len):
+def start_CART(train_len, test_len):
 
     list = make_list_parts_of_speech(train_len)
     from converter import Converter
@@ -56,7 +56,7 @@ def start_SVC(train_len, test_len):
     print("len train list", len(list))
     print("len converter", len(converter.mass))
 
-    model = SVC(  )
+    model = DecisionTreeClassifier(  )
 
     # print("clf.fit start")
 
@@ -95,7 +95,7 @@ def check(train_data, test_data):
     # print("len converter", len(converter.mass))
     # print("len test_data", len(test_data))
 
-    model = SVC(  )
+    model = DecisionTreeClassifier(  )
     model.fit(X, y)
     [test_X, test_y] = get_X_y(test_data, converter)
 
@@ -114,23 +114,20 @@ def checking(): # кросс валидация
         for j in range(len(parts)):
             if i!=j:
                 check(parts[i], parts[j])
-    print("------------------------")
     for i in range(len(parts2)):
         for j in range(len(parts2)):
             if i != j:
                 check(parts2[i], parts2[j])
-    print("------------------------")
-
     for i in range(len(parts3)):
         for j in range(len(parts3)):
             if i!=j:
                 check(parts3[i], parts3[j])
-
+from sklearn.svm import SVC
 checking()
 
 
 
-def save_new_SVC_model(train_len):
+def save_new_CART_model(train_len):
 
     list = make_list_gender(train_len)
     from converter import Converter
@@ -140,7 +137,7 @@ def save_new_SVC_model(train_len):
     print("len train list", len(list))
     print("len converter", len(converter.mass))
 
-    model = SVC(  )
+    model = DecisionTreeClassifier(  )
 
     # print("clf.fit start")
 

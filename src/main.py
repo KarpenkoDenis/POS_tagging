@@ -1,5 +1,5 @@
 import numpy as np
-from read_groups import make_list_mans_and_womans
+from read_groups import make_list_gender
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import  grid_search
 
@@ -15,7 +15,7 @@ corpus = [
     "ac",
 ]
 
-list = make_list_mans_and_womans(10)
+list = make_list_gender(3)
 
 new_list =[]
 large_list =[]
@@ -108,3 +108,4 @@ gender("летняя")
 gender("монтажнице")
 gender("миллионерша")
 gender("миллионерша")
+
