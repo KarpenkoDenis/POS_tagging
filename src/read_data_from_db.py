@@ -103,22 +103,3 @@ def read_files_from_name(path, name):
     # print("all_words:", all_words)
     return all_words
 
-'''
-
-# пример
-
-ends_parser("{ел,л{а,у},в{щл{1,2,3},jiodf,ji,о,ш},шо,оа}")
-
-print("-------------")
-
-ends_parser("{ел,л{а,у},в{щл,jiodf,ji,о,ш},шо,оа}")
-add_ends_to_word("123", "{ел,л{а,у},в{щл,jiodf,ji,о,ш},шо,оа}")
-
-
-'''
-
-'''
-read_files_from_name("./resource/ЖЕН/", "lexgroup.031")
-read_files_from('./resource/МУЖ/')
-
-'''
