@@ -29,11 +29,12 @@ def make_matrixs_p(len=4000):
 
 def normalise(matrix):
     # сглаживание ( убираем нулевые вероятности)
-    k = 0.1 # коэффициент на сколько сглаживаем
+    # k = 0.01 # коэффициент на сколько сглаживаем
     for line in matrix:
         line_len = sum(line)
         for i in range(len(line)):
-            line[i]+=k*line_len
+            # line[i]+=k*line_len
+            line[i]+=1
 
 
     for line in matrix:

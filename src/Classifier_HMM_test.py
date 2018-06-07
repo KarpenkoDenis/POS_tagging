@@ -1,9 +1,12 @@
 from converter import Converter
 from read_groups import make_list_gender, make_list_parts_of_speech, make_biargams_list_parts_of_speech
 from CART_lib import check_data, get_X_y
-from sklearn.tree import DecisionTreeClassifier
 from HMM import HMM_class
-
+# from sklearn.tree import DecisionTreeClassifier
+# from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier as Classifier
+# from sklearn.svm import SVC as Classifier #там predict_proba нет
+# from  sklearn.tree  import DecisionTreeClassifier as Classifier
 print("df")
 
 
@@ -156,7 +159,7 @@ def check(trainData, testData):
     # print("len converter", len(converter.mass))
     # print("len test_data", len(testData))
 
-    model = DecisionTreeClassifier()
+    model = Classifier()
     add_all_classes = range(14)
     value_all_classes = [[-1000 - 10000] for i in range(14)]
 

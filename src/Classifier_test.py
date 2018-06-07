@@ -2,8 +2,13 @@ import numpy as np
 from read_groups import make_list_gender, make_list_parts_of_speech
 from sklearn import metrics
 # from sklearn.naive_bayes import BernoulliNB
-from sklearn.tree import DecisionTreeClassifier
+# from sklearn.tree import DecisionTreeClassifier
+# from sklearn.cluster import KMeans
 
+# from sklearn.neighbors import KNeighborsClassifier
+# Classifier = KNeighborsClassifier
+from sklearn.neighbors import KNeighborsClassifier as Classifier
+# Classifier = RadiusNeighborsClassifier
 
 from sklearn.externals import joblib # для сохранения модели
 
@@ -17,6 +22,7 @@ def get_X_y(list, converter):
             converter.convert(m[1]),
             converter.convert(m[2]),
             m[3]]]
+
     X = []
     for el in large_list:
         X = X + [el[:-1]]
@@ -24,6 +30,7 @@ def get_X_y(list, converter):
     y = []
     for el in large_list:
         y = y + [el[-1]]
+
     return [X, y]
 
 
@@ -44,7 +51,7 @@ def check_data(test_X, test_y, data):
 
 
 
-def start_CART(train_len, test_len):
+def start_SVC(train_len, test_len):
 
     list = make_list_parts_of_speech(train_len)
     from converter import Converter
@@ -54,7 +61,7 @@ def start_CART(train_len, test_len):
     print("len train list", len(list))
     print("len converter", len(converter.mass))
 
-    model = DecisionTreeClassifier(  )
+    model = Classifier(  )
 
     # print("clf.fit start")
 
@@ -93,7 +100,7 @@ def check(train_data, test_data):
     # print("len converter", len(converter.mass))
     # print("len test_data", len(test_data))
 
-    model = DecisionTreeClassifier(  )
+    model = Classifier(  )
     model.fit(X, y)
     [test_X, test_y] = get_X_y(test_data, converter)
 
@@ -102,32 +109,35 @@ def check(train_data, test_data):
 def checking(): # кросс валидация
 
     all_words = make_list_parts_of_speech(80000)
-    parts = [all_words[:20000], all_words[20000:40000], all_words[40000:60000], all_words[60000:]]
+    parts0 = [all_words[:40000], all_words[40000:] ]
+    parts1 = [all_words[:20000], all_words[20000:40000], all_words[40000:60000], all_words[60000:]]
     parts2 = [all_words[:10000], all_words[10000:20000], all_words[20000:30000], all_words[30000:40000], \
              all_words[50000:60000], all_words[60000:70000], all_words[70000:]]
     parts3 = [all_words[:5000], all_words[5000:10000], all_words[10000:15000],  all_words[15000:20000], \
              all_words[20000:25000], all_words[25000:30000]]
+    all_parts = [parts0, parts1, parts2, parts3]
+    for parts in all_parts:
+        for i in range(len(parts)):
+            for j in range(len(parts)):
+                if i!=j:
+                    check(parts[i], parts[j])
+        print("------------------------")
+    # for i in range(len(parts2)):
+    #     for j in range(len(parts2)):
+    #         if i != j:
+    #             check(parts2[i], parts2[j])
+    # print("------------------------")
+    #
+    # for i in range(len(parts3)):
+    #     for j in range(len(parts3)):
+    #         if i!=j:
+    #             check(parts3[i], parts3[j])
 
-    for i in range(len(parts)):
-        for j in range(len(parts)):
-            if i!=j:
-                check(parts[i], parts[j])
-    print("------------------------")
-    for i in range(len(parts2)):
-        for j in range(len(parts2)):
-            if i != j:
-                check(parts2[i], parts2[j])
-    print("------------------------")
-    for i in range(len(parts3)):
-        for j in range(len(parts3)):
-            if i!=j:
-                check(parts3[i], parts3[j])
-from sklearn.svm import SVC
-# checking()
+checking()
 
 
 
-def save_new_CART_model(train_len):
+def save_new_SVC_model(train_len):
 
     list = make_list_gender(train_len)
     from converter import Converter
@@ -137,7 +147,7 @@ def save_new_CART_model(train_len):
     print("len train list", len(list))
     print("len converter", len(converter.mass))
 
-    model = DecisionTreeClassifier(  )
+    model = Classifier(  )
 
     # print("clf.fit start")
 
